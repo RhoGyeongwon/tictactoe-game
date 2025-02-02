@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    public Sprite DisplayPlayerMark() //버튼 누를 시 player의 마크가 표시 된다.
+    public Sprite DisplayPlayerMark() // (UI_Button) 버튼 누를 시 버튼에 플레이어의 마크 값 설정
     {
         Sprite tempImage = null;
         ++gameTurn;
@@ -116,7 +116,7 @@ public class GameManager : MonoBehaviour
         return tempImage;
     }
 
-    public int SettingMarkValue()
+    public int SettingMarkValue() // (Value_Button) 버튼 누를 시 버튼에 플레이어의 마크 값 설정
     {
         int markValue = 0;
         if (gameTurn % 2 == 0)
@@ -146,20 +146,114 @@ public class GameManager : MonoBehaviour
         return markValue;
     }
 
-    public void SaveMarkValuetoGrid(int rowIndex, int colIndex, int markNum)
+    public void SaveMarkValuetoGrid(int rowIndex, int colIndex, int markNum) // (Grid) 버튼 누를 시 그리드에 마크 값 설정, Grid는 동일한 마크가 3개 이상 있는지 체크하기 위해 필요
     {
         markValueGrid[rowIndex, colIndex] = (EMarkType)markNum;
     }
     public void CheckMarkLineMatch()
     {
-        int buttonIndex = 0;
+        EMarkType tempType = EMarkType.defaultMark;
+        int sameValueCount = 0;
+        
+        for (int i = 0; i < markValueGrid.GetLength(1); i++)
+        {
+            for (int j = 0; j < markValueGrid.GetLength(0); j++)
+            {
+                if (i == 0)
+                {
+                    tempType = markValueGrid[i, j];
+                    continue;
+                }
+
+                if (tempType == markValueGrid[i, j])
+                {
+                    ++sameValueCount;
+                }
+
+                tempType = markValueGrid[i, j];
+            }
+            
+            if (sameValueCount == 2)
+            {
+                if (tempType == player1)
+                {
+                    
+                }
+                else
+                {
+                    //플레이어 2가 승리
+                }
+            }
+            
+            tempType = EMarkType.defaultMark;
+            sameValueCount = 0;
+        }
         
         for (int i = 0; i < markValueGrid.GetLength(0); i++)
         {
             for (int j = 0; j < markValueGrid.GetLength(1); j++)
             {
-                markValueGrid[i, j] = (EMarkType)buttons[buttonIndex].markNum;
-                ++buttonIndex;
+                if (j == 0)
+                {
+                    tempType = markValueGrid[j, i];
+                    continue;
+                }
+
+                if (tempType == markValueGrid[j, i])
+                {
+                    ++sameValueCount;
+                }
+
+                tempType = markValueGrid[j, i];
+            }
+            
+            if (sameValueCount == 2)
+            {
+                if (tempType == player1)
+                {
+                    //플레이어 1이 승리
+                }
+                else
+                {
+                    //플레이어 2가 승리
+                }
+            }
+            
+            tempType = EMarkType.defaultMark;
+            sameValueCount = 0;
+        }
+
+        if (markValueGrid[0, 0] == markValueGrid[1, 1] && markValueGrid[1, 1] == markValueGrid[2, 2])
+        {
+            tempType = markValueGrid[0, 0];
+            
+            if (sameValueCount == 2)
+            {
+                if (tempType == player1)
+                {
+                    //플레이어 1이 승리
+                }
+                else
+                {
+                    //플레이어 2가 승리
+                }
+            }
+        }
+        
+        if (markValueGrid[0, 2] == markValueGrid[1, 1] && markValueGrid[1, 1] == markValueGrid[2, 0])
+        {
+            tempType = markValueGrid[0, 0];
+            
+            if (sameValueCount == 2)
+            {
+                if (tempType == player1)
+                {
+                    //플레이어 1이 승리
+                }
+                else
+                {
+                    //플레이어 2가 승리
+                }
             }
         }
     }

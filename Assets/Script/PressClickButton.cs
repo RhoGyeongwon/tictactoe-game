@@ -8,6 +8,7 @@ public class PressClickButton : MonoBehaviour
     public Action SettingMarkValueToGrid;
     public Func<int> SettingButtonMarkNum;
     public Func<Sprite> HandlePlayerImageChange;
+    
     private Button Button;
     private bool isClick = false;
     public int buttonRowIndex;
