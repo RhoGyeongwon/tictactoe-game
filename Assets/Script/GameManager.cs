@@ -48,8 +48,8 @@ public class GameManager : MonoBehaviour
     
     void Start()
     {
+        InitializeButtonIndexSetting();
         InitializePlayerMark();
-        IntializeButtonIndexSetting();
     }
 
     void InitializePlayerMark() //처음 시작할 마크가 O인지 X인지 정하기
@@ -115,6 +115,4 @@ public class GameManager : MonoBehaviour
         }
         return tempImage;
     }
-    
-    
 }

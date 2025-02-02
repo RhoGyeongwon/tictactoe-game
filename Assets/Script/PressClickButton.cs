@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class PressClickButton : MonoBehaviour
 {
-    private GameManager.EMarkType markType;
     public Func<Sprite> HandlePlayerImageChange;
     private Button Button;
     private bool isClick = false;
@@ -14,7 +13,6 @@ public class PressClickButton : MonoBehaviour
     void Start()
     {
         Button = GetComponent<Button>();
-        markType = GameManager.EMarkType.defaultMark;
     }
 
     public void ButtonUp()
