@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     }
     private EMarkType player1;
     private EMarkType player2;
-    private int gameTurn;
+    public int gameTurn;
     [SerializeField] Sprite xMarkImg;
     [SerializeField] Sprite OMarkImg;
     public EMarkType[,] markValueGrid = new EMarkType[3, 3];
@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
     {
         gameTurn = 1;
         int turnMark = Random.Range((int)EMarkType.defaultMark + 1, (int)EMarkType.max);
+        //xMark, oMark 중에 하나 선택
         switch ((EMarkType)turnMark)
         {
             case EMarkType.xMark:
@@ -80,15 +81,20 @@ public class GameManager : MonoBehaviour
                 buttons[buttonIndex].buttonRowIndex = i; 
                 buttons[buttonIndex].buttonColIndex = j;
                 ++buttonIndex;
+                // 각 버튼은 buttonRowIndex과 buttonColIndex를 가지고 있다.
+                // 0번째 버튼 0,0
+                // 1번째 버튼 0,1
+                // 2번째 버튼 0,2
+                // ...
             }
         }
     }
 
-    public Sprite PreviewDMark()
+    public Sprite PreviewDMark() //버튼에 마우스 올려둘 시 미리보기
     {
         Sprite tempImage = null;
         
-        if (gameTurn % 2 == 0)
+        if ((gameTurn + 1) % 2 == 0)
         {
             switch (player1)
             {
@@ -120,7 +126,7 @@ public class GameManager : MonoBehaviour
     {
         Sprite tempImage = null;
         
-        if (gameTurn % 2 == 0)
+        if ((gameTurn + 1) % 2 == 0)
         {
             switch (player1)
             {
@@ -145,7 +151,7 @@ public class GameManager : MonoBehaviour
             }
         }
         
-        ++gameTurn;
+        
         return tempImage;
     }
 
