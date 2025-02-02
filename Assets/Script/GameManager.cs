@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     private int gameTurn;
     [SerializeField] Sprite xMarkImg;
     [SerializeField] Sprite OMarkImg;
-    public EMarkType[,] Grid = new EMarkType[3, 3];
+    public EMarkType[,] markValueGrid = new EMarkType[3, 3];
     public PressClickButton[] buttons;
     
     public int testbuttonRowIndex;
@@ -73,9 +73,9 @@ public class GameManager : MonoBehaviour
     {
         int buttonIndex = 0;
         
-        for (int i = 0; i < Grid.GetLength(0); i++)
+        for (int i = 0; i < markValueGrid.GetLength(0); i++)
         {
-            for (int j = 0; j < Grid.GetLength(1); j++)
+            for (int j = 0; j < markValueGrid.GetLength(1); j++)
             {
                 buttons[buttonIndex].buttonRowIndex = i;
                 buttons[buttonIndex].buttonColIndex = j;
@@ -119,7 +119,6 @@ public class GameManager : MonoBehaviour
     public int SettingMarkValue()
     {
         int markValue = 0;
-        
         if (gameTurn % 2 == 0)
         {
             switch (player1)
@@ -145,5 +144,23 @@ public class GameManager : MonoBehaviour
             }
         }
         return markValue;
+    }
+
+    public void SaveMarkValuetoGrid(int rowIndex, int colIndex, int markNum)
+    {
+        markValueGrid[rowIndex, colIndex] = (EMarkType)markNum;
+    }
+    public void CheckMarkLineMatch()
+    {
+        int buttonIndex = 0;
+        
+        for (int i = 0; i < markValueGrid.GetLength(0); i++)
+        {
+            for (int j = 0; j < markValueGrid.GetLength(1); j++)
+            {
+                markValueGrid[i, j] = (EMarkType)buttons[buttonIndex].markNum;
+                ++buttonIndex;
+            }
+        }
     }
 }
