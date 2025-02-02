@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void IntializeButtonIndexSetting() // 버튼의 배열 위치 값을 초기화하고, 버튼을 defaultMark로 설정
+    void InitializeButtonIndexSetting() // 버튼의 배열 위치 값을 초기화하고, 버튼을 defaultMark로 설정
     {
         int buttonIndex = 0;
         
