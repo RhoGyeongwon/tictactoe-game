@@ -1595,18 +1595,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37a9aaf15033f024bbd68ac22b261338, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameTurn: 0
   xMarkImg: {fileID: 21300000, guid: afeaec2d0ad154940a390c5fc76e2ae5, type: 3}
   OMarkImg: {fileID: 21300000, guid: ad3bf7647203da341849496e8c827f2d, type: 3}
   buttons:
   - {fileID: 1206221839}
   - {fileID: 432016973}
   - {fileID: 1184127436}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1431499574}
+  - {fileID: 770415489}
+  - {fileID: 2086594428}
+  - {fileID: 625189424}
+  - {fileID: 633028472}
+  - {fileID: 407556898}
 --- !u!4 &817022060
 Transform:
   m_ObjectHideFlags: 0
