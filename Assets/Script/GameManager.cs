@@ -3,16 +3,38 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    //player1인 상태에서 버튼을 클릭하면
-    //player1이 가지고 있는 이미지가 뜬다.
-    
     private EMarkType player1;
     private EMarkType player2;
     private int gameTurn;
-    private Button[] button;
-    private Sprite _sprite;
-    [SerializeField] Image xMarkImg;
-    [SerializeField] Image OMarkImg;
+    [SerializeField] Button[] button;
+    [SerializeField] Sprite xMarkImg;
+    [SerializeField] Sprite OMarkImg;
+
+    private static GameManager _instance;
+    public static GameManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<GameManager>();
+            }
+            return _instance;
+        }
+    }
+
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
+    
     public enum EMarkType
     {
         xMark,
@@ -27,14 +49,6 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        for (int i = 0; i < button.Length; i++)
-        {
-            PressClickButton tempButton = button[i].GetComponent<PressClickButton>();
-            if (tempButton.IsClick)
-            {
-                tempButton.buttonClickaction = () => PressTurnClick();
-            }
-        }
     }
 
     void InitializePlayerMark()
@@ -56,9 +70,9 @@ public class GameManager : MonoBehaviour
         //그때마다 이벤트를 할당해주면 된다.
     }
 
-    Image PressTurnClick()
+    public Sprite PressTurnClick()
     {
-        Image tempImage = null;
+        Sprite tempImage = null;
         ++gameTurn;
         
         if (gameTurn % 2 == 0)
@@ -72,8 +86,6 @@ public class GameManager : MonoBehaviour
                     tempImage = OMarkImg;
                     break;
             }
-
-            return tempImage;
         }
         else
         {
@@ -86,8 +98,7 @@ public class GameManager : MonoBehaviour
                     tempImage = OMarkImg;
                     break;
             }
-            
-            return tempImage;
         }
+        return tempImage;
     }
 }

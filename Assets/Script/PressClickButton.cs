@@ -4,29 +4,25 @@ using UnityEngine.UI;
 
 public class PressClickButton : MonoBehaviour
 {//여기서 반환값을 받아서 버튼에 적용시켜줘야하지 않을까?
-    public Func<Image> buttonClickaction;
-    private Image img;
-    private Button button;
+    public Func<Sprite> buttonClickaction;
+    private Sprite buttonSprite;
+    private Button gameButton;
     private bool isClick = false;
-    public bool IsClick
-    {
-        get => isClick;
-    }
 
     void Start()
     {
-        button = GetComponent<Button>();
+        gameButton = GetComponent<Button>();
     }
 
-    public void ButtonDown()
-    {
-        isClick = true;
-    }
-    
     public void ButtonUp()
     {
-        img = buttonClickaction?.Invoke();
-        button.image = img;
-        button.enabled = false;
+        Debug.Log("Click");
+        if (!isClick)
+        {
+            buttonClickaction = () => GameManager.Instance.PressTurnClick();
+            gameButton.image.sprite = buttonClickaction?.Invoke();
+            isClick = true;
+            gameButton.enabled = false;
+        }
     }
 }
