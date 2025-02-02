@@ -18,9 +18,6 @@ public class GameManager : MonoBehaviour
     public EMarkType[,] markValueGrid = new EMarkType[3, 3];
     public PressClickButton[] buttons;
     
-    public int testbuttonRowIndex;
-    public int testbuttonColIndex;
-    
     private static GameManager _instance;
     public static GameManager Instance
     {
@@ -52,6 +49,10 @@ public class GameManager : MonoBehaviour
         InitializePlayerMark();
     }
 
+    void Update()
+    {
+        CheckMarkLineMatch();
+    }
     void InitializePlayerMark() //처음 시작할 마크가 O인지 X인지 정하기
     {
         gameTurn = 0;
@@ -69,7 +70,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void InitializeButtonIndexSetting() // 버튼의 배열 위치 값을 초기화하고, 버튼을 defaultMark로 설정
+    void InitializeButtonIndexSetting() // 버튼의 배열 위치 값을 초기화하고, 버튼을 아무것도 없는 마크 값으로 설정
     {
         int buttonIndex = 0;
         
@@ -84,7 +85,7 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    public Sprite DisplayPlayerMark() // (UI_Button) 버튼 누를 시 버튼에 플레이어의 마크 값 설정
+    public Sprite DisplayPlayerMark() // (UI_Button) 버튼 누를 시 버튼에 현재 순서의 플레이어의 마크 값 설정
     {
         Sprite tempImage = null;
         ++gameTurn;
@@ -159,7 +160,7 @@ public class GameManager : MonoBehaviour
         {
             for (int j = 0; j < markValueGrid.GetLength(0); j++)
             {
-                if (i == 0)
+                if (j == 0)
                 {
                     tempType = markValueGrid[i, j];
                     continue;
@@ -173,15 +174,15 @@ public class GameManager : MonoBehaviour
                 tempType = markValueGrid[i, j];
             }
             
-            if (sameValueCount == 2)
+            if (sameValueCount == 2 && tempType != EMarkType.defaultMark)
             {
                 if (tempType == player1)
                 {
-                    
+                    Debug.Log($"{player1}가 승리!");
                 }
                 else
                 {
-                    //플레이어 2가 승리
+                    Debug.Log($"{player2}가 승리!");
                 }
             }
             
@@ -198,62 +199,56 @@ public class GameManager : MonoBehaviour
                     tempType = markValueGrid[j, i];
                     continue;
                 }
-
+        
                 if (tempType == markValueGrid[j, i])
                 {
                     ++sameValueCount;
                 }
-
+        
                 tempType = markValueGrid[j, i];
             }
             
-            if (sameValueCount == 2)
+            if (sameValueCount == 2 && tempType != EMarkType.defaultMark)
             {
                 if (tempType == player1)
                 {
-                    //플레이어 1이 승리
+                    Debug.Log($"{player1}가 승리!");
                 }
                 else
                 {
-                    //플레이어 2가 승리
+                    Debug.Log($"{player2}가 승리!");
                 }
             }
             
             tempType = EMarkType.defaultMark;
             sameValueCount = 0;
         }
-
-        if (markValueGrid[0, 0] == markValueGrid[1, 1] && markValueGrid[1, 1] == markValueGrid[2, 2])
+        
+        tempType = markValueGrid[0, 0];
+        
+        if (tempType != EMarkType.defaultMark && markValueGrid[0, 0] == markValueGrid[1, 1] && markValueGrid[1, 1] == markValueGrid[2, 2])
         {
-            tempType = markValueGrid[0, 0];
-            
-            if (sameValueCount == 2)
+            if (tempType == player1)
             {
-                if (tempType == player1)
-                {
-                    //플레이어 1이 승리
-                }
-                else
-                {
-                    //플레이어 2가 승리
-                }
+                Debug.Log($"{player1}가 승리!");
+            }
+            else
+            {
+                Debug.Log($"{player2}가 승리!");
             }
         }
         
-        if (markValueGrid[0, 2] == markValueGrid[1, 1] && markValueGrid[1, 1] == markValueGrid[2, 0])
+        tempType = markValueGrid[0, 2];
+        
+        if (tempType != EMarkType.defaultMark && markValueGrid[0, 2] == markValueGrid[1, 1] && markValueGrid[1, 1] == markValueGrid[2, 0])
         {
-            tempType = markValueGrid[0, 0];
-            
-            if (sameValueCount == 2)
+            if (tempType == player1)
             {
-                if (tempType == player1)
-                {
-                    //플레이어 1이 승리
-                }
-                else
-                {
-                    //플레이어 2가 승리
-                }
+                Debug.Log($"{player1}가 승리!");
+            }
+            else
+            {
+                Debug.Log($"{player2}가 승리!");
             }
         }
     }
