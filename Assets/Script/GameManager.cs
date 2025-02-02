@@ -115,4 +115,35 @@ public class GameManager : MonoBehaviour
         }
         return tempImage;
     }
+
+    public int SettingMarkValue()
+    {
+        int markValue = 0;
+        
+        if (gameTurn % 2 == 0)
+        {
+            switch (player1)
+            {
+                case EMarkType.xMark:
+                    markValue =  (int)EMarkType.xMark;
+                    break;
+                case EMarkType.oMark:
+                    markValue =  (int)EMarkType.oMark;
+                    break;
+            }
+        }
+        else
+        {
+            switch (player2)
+            {
+                case EMarkType.xMark:
+                    markValue =  (int)EMarkType.xMark;
+                    break;
+                case EMarkType.oMark:
+                    markValue =  (int)EMarkType.oMark;
+                    break;
+            }
+        }
+        return markValue;
+    }
 }
