@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
     }
     void InitializePlayerMark() //처음 시작할 마크가 O인지 X인지 정하기
     {
-        gameTurn = 0;
+        gameTurn = 1;
         int turnMark = Random.Range((int)EMarkType.defaultMark + 1, (int)EMarkType.max);
         switch ((EMarkType)turnMark)
         {
@@ -84,11 +84,10 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    
-    public Sprite DisplayPlayerMark() // (UI_Button) 버튼 누를 시 버튼에 현재 순서의 플레이어의 마크 값 설정
+
+    public Sprite PreviewDMark()
     {
         Sprite tempImage = null;
-        ++gameTurn;
         
         if (gameTurn % 2 == 0)
         {
@@ -114,13 +113,47 @@ public class GameManager : MonoBehaviour
                     break;
             }
         }
+        
+        return tempImage;
+    }
+    
+    public Sprite DisplayPlayerMark() // (UI_Button) 버튼 누를 시 버튼에 현재 순서의 플레이어의 마크 값 설정
+    {
+        Sprite tempImage = null;
+        
+        if (gameTurn % 2 == 0)
+        {
+            switch (player1)
+            {
+                case EMarkType.xMark:
+                    tempImage = xMarkImg;
+                    break;
+                case EMarkType.oMark:
+                    tempImage = OMarkImg;
+                    break;
+            }
+        }
+        else
+        {
+            switch (player2)
+            {
+                case EMarkType.xMark:
+                    tempImage = xMarkImg;
+                    break;
+                case EMarkType.oMark:
+                    tempImage = OMarkImg;
+                    break;
+            }
+        }
+        
+        ++gameTurn;
         return tempImage;
     }
 
     public int SettingMarkValue() // (Value_Button) 버튼 누를 시 버튼에 플레이어의 마크 값 설정
     {
         int markValue = 0;
-        if (gameTurn % 2 == 0)
+        if ((gameTurn + 1) % 2 == 0)
         {
             switch (player1)
             {
@@ -252,4 +285,5 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    
 }

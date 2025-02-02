@@ -8,6 +8,7 @@ public class PressClickButton : MonoBehaviour
     public Action SettingMarkValueToGrid;
     public Func<int> SettingButtonMarkNum;
     public Func<Sprite> HandlePlayerImageChange;
+    public Func<Sprite> HighlightCellWithPlayerMark;
     
     private Button Button;
     private bool isClick = false;
@@ -19,6 +20,21 @@ public class PressClickButton : MonoBehaviour
         Button = GetComponent<Button>();
     }
 
+    void Update()
+    {
+        DisplayHighlightSprite();
+    }
+    
+    public void DisplayHighlightSprite()
+    {
+        HighlightCellWithPlayerMark = () => GameManager.Instance.PreviewDMark();
+
+        //★ spriteState는 구조체라서 직접 수정못함
+        var spriteState = Button.spriteState;
+        spriteState.highlightedSprite = HighlightCellWithPlayerMark();
+        Button.spriteState = spriteState;
+    }
+    
     public void ButtonUp()
     {
         if (!isClick)
@@ -34,6 +50,8 @@ public class PressClickButton : MonoBehaviour
             
             isClick = true;
             Button.enabled = false;
+            
+            Debug.Log(markNum);
         }
     }
 }
