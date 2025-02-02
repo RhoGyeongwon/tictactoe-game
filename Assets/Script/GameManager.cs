@@ -1,13 +1,12 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
     public enum EMarkType
     {
         defaultMark,
-        xMark,
-        oMark,
+        xMark, //1
+        oMark, //2
         max
     }
     private EMarkType player1;
@@ -78,7 +77,7 @@ public class GameManager : MonoBehaviour
         {
             for (int j = 0; j < markValueGrid.GetLength(1); j++)
             {
-                buttons[buttonIndex].buttonRowIndex = i;
+                buttons[buttonIndex].buttonRowIndex = i; 
                 buttons[buttonIndex].buttonColIndex = j;
                 ++buttonIndex;
             }
@@ -285,5 +284,4 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    
 }

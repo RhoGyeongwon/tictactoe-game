@@ -50,8 +50,6 @@ public class PressClickButton : MonoBehaviour
             
             isClick = true;
             Button.enabled = false;
-            
-            Debug.Log(markNum);
         }
     }
 }
