@@ -1,15 +1,21 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public enum EMarkType
+    {
+        noMark,
+        xMark,
+        oMark,
+        max
+    }
     private EMarkType player1;
     private EMarkType player2;
     private int gameTurn;
-    [SerializeField] Button[] button;
     [SerializeField] Sprite xMarkImg;
     [SerializeField] Sprite OMarkImg;
-
+    public EMarkType[,] Grid = new EMarkType[3, 3];
+    
     private static GameManager _instance;
     public static GameManager Instance
     {
@@ -35,27 +41,16 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    public enum EMarkType
-    {
-        xMark,
-        oMark,
-        max
-    }
-    
     void Start()
     {
         InitializePlayerMark();
     }
 
-    void Update()
-    {
-    }
-
-    void InitializePlayerMark()
+    void InitializePlayerMark() //처음 시작할 마크가 O인지 X인지 정하기
     {
         gameTurn = 0;
-        int temp = Random.Range(0, (int)EMarkType.max);
-        switch ((EMarkType)temp)
+        int turnMark = Random.Range((int)EMarkType.noMark + 1, (int)EMarkType.max);
+        switch ((EMarkType)turnMark)
         {
             case EMarkType.xMark:
                 player1 = EMarkType.xMark;
@@ -66,11 +61,9 @@ public class GameManager : MonoBehaviour
                 player2 = EMarkType.xMark;
                 break;
         }
-
-        //그때마다 이벤트를 할당해주면 된다.
     }
 
-    public Sprite PressTurnClick()
+    public Sprite DisplayPlayerMark() //버튼 누를 시 player의 마크가 표시 된다.
     {
         Sprite tempImage = null;
         ++gameTurn;
