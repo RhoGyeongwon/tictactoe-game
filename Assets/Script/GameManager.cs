@@ -1,10 +1,11 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
     public enum EMarkType
     {
-        noMark,
+        defaultMark,
         xMark,
         oMark,
         max
@@ -15,6 +16,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] Sprite xMarkImg;
     [SerializeField] Sprite OMarkImg;
     public EMarkType[,] Grid = new EMarkType[3, 3];
+    public PressClickButton[] buttons;
+    
+    public int testbuttonRowIndex;
+    public int testbuttonColIndex;
     
     private static GameManager _instance;
     public static GameManager Instance
@@ -44,12 +49,13 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         InitializePlayerMark();
+        IntializeButtonIndexSetting();
     }
 
     void InitializePlayerMark() //처음 시작할 마크가 O인지 X인지 정하기
     {
         gameTurn = 0;
-        int turnMark = Random.Range((int)EMarkType.noMark + 1, (int)EMarkType.max);
+        int turnMark = Random.Range((int)EMarkType.defaultMark + 1, (int)EMarkType.max);
         switch ((EMarkType)turnMark)
         {
             case EMarkType.xMark:
@@ -63,6 +69,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void IntializeButtonIndexSetting() // 버튼의 배열 위치 값을 초기화하고, 버튼을 defaultMark로 설정
+    {
+        int buttonIndex = 0;
+        
+        for (int i = 0; i < Grid.GetLength(0); i++)
+        {
+            for (int j = 0; j < Grid.GetLength(1); j++)
+            {
+                buttons[buttonIndex].buttonRowIndex = i;
+                buttons[buttonIndex].buttonColIndex = j;
+                ++buttonIndex;
+            }
+        }
+    }
+    
     public Sprite DisplayPlayerMark() //버튼 누를 시 player의 마크가 표시 된다.
     {
         Sprite tempImage = null;
@@ -94,4 +115,6 @@ public class GameManager : MonoBehaviour
         }
         return tempImage;
     }
+    
+    
 }

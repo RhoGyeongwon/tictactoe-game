@@ -4,13 +4,17 @@ using UnityEngine.UI;
 
 public class PressClickButton : MonoBehaviour
 {
+    private GameManager.EMarkType markType;
     public Func<Sprite> HandlePlayerImageChange;
     private Button Button;
     private bool isClick = false;
-
+    public int buttonRowIndex;
+    public int buttonColIndex;
+    
     void Start()
     {
         Button = GetComponent<Button>();
+        markType = GameManager.EMarkType.defaultMark;
     }
 
     public void ButtonUp()
